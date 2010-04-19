@@ -1,8 +1,9 @@
-module Genera
-  
-  class Node
-    def generate(context)
-      raise NotImplementedError, "Genera::Node#generate is abstract"
-    end
-  end
-end
+require 'genera/node/node'
+require 'genera/node/data'
+require 'genera/node/bool_literal'
+require 'genera/node/int_literal'
+require 'genera/node/float_literal'
+require 'genera/node/cond'
+require 'genera/node/bool_cond'
+require 'genera/node/float_cond'
+require 'genera/node/int_cond'
