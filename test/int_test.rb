@@ -83,4 +83,13 @@ class IntTest < Test::Unit::TestCase
     proto = Prototype.new(:**, [Int, Int], Int)
     assert_equal proto, pow.node.prototype
   end
+  
+  def test_to_f
+    int = Genera.Int(1)
+    flt = int.to_f
+    assert_kind_of Float, flt
+    assert_kind_of Application, flt.node
+    proto = Prototype.new(:to_f, [Int], Float)
+    assert_equal proto, flt.node.prototype
+  end
 end

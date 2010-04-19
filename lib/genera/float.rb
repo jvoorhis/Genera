@@ -73,8 +73,6 @@ module Genera
       Int.new(node)
     end
     
-    alias :to_i :floor
-    
     def ceil
       proto = Prototype.new(:ceil, [Genera::Float], Genera::Int)
       node  = Application.new(proto, [@node])
@@ -85,6 +83,12 @@ module Genera
       proto = Prototype.new(:round, [Genera::Float], Genera::Int)
       node  = Application.new(proto, [@node])
       Int.new(node)
+    end
+    
+    alias :to_i :floor
+    
+    def to_f
+      self
     end
   end
   

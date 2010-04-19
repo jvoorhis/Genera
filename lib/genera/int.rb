@@ -60,10 +60,16 @@ module Genera
       node  = Application.new(proto, [@node, rhs.node])
       Int.new(node)
     end
+    
+    def to_f
+      proto = Prototype.new(:to_f, [Int], Float)
+      node  = Application.new(proto, [@node])
+      Float.new(node)
+    end
   end
   
   def Int(value)
-    if value.kind_of?(Genera::Int)
+    if value.kind_of?(Int)
       value
     else
       Int.new(IntLiteral.new(value))
