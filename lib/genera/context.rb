@@ -1,10 +1,13 @@
 module Genera
   
   class Context
-    attr_reader :module, :function, :builder
+    attr_reader :primitives, :module, :function, :builder
     
-    def initialize(mod, func, builder)
-      @module, @function, @builder = mod, func, builder
+    def initialize(primitives, mod, func, builder)
+      @primitives = primitives
+      @module     = mod
+      @function   = func
+      @builder    = builder
     end
   end
 end

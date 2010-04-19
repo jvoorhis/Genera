@@ -1,5 +1,6 @@
 require 'genera/node/node'
 require 'genera/node/data'
+require 'genera/node/application'
 require 'genera/node/bool_literal'
 require 'genera/node/int_literal'
 require 'genera/node/float_literal'

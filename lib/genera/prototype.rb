@@ -15,10 +15,19 @@ module Genera
       @arg_types == proto.arg_types &&
       @return_type == proto.return_type
     end
-    alias_method :eql?, :==
+    
+    alias :eql? :==
     
     def hash
       [Prototype, @name, @arg_types, @return_type].hash
+    end
+    
+    def to_s
+      "%s : %s -> %s" % [
+        @name =~ /^[a-z0-9]/i ? @name : "(%s)" % @name,
+        @arg_types.join(" * "),
+        @return_type
+      ]
     end
   end
 end

@@ -14,6 +14,78 @@ module Genera
     def generate(context)
       @node.generate(context)
     end
+    
+    def +(rhs)
+      proto = Prototype.new(:+, [Genera::Float, Genera::Float], Genera::Float)
+      node  = Application.new(proto, [@node, rhs.node])
+      Float.new(node)
+    end
+    
+    def -(rhs)
+      proto = Prototype.new(:-, [Genera::Float, Genera::Float], Genera::Float)
+      node  = Application.new(proto, [@node, rhs.node])
+      Float.new(node)
+    end
+    
+    def *(rhs)
+      proto = Prototype.new(:*, [Genera::Float, Genera::Float], Genera::Float)
+      node  = Application.new(proto, [@node, rhs.node])
+      Float.new(node)
+    end
+    
+    def /(rhs)
+      proto = Prototype.new(:/, [Genera::Float, Genera::Float], Genera::Float)
+      node  = Application.new(proto, [@node, rhs.node])
+      Float.new(node)
+    end
+    
+    def -@
+      proto = Prototype.new(:-@, [Genera::Float], Genera::Float)
+      node  = Application.new(proto, [@node])
+      Float.new(node)
+    end
+    
+    def +@
+      self
+    end
+    
+    def %(rhs)
+      proto = Prototype.new(:%, [Genera::Float, Genera::Float], Genera::Float)
+      node  = Application.new(proto, [@node, rhs.node])
+      Float.new(node)
+    end
+    
+    def **(rhs)
+      proto = Prototype.new(:**, [Genera::Float, Genera::Float], Genera::Float)
+      node  = Application.new(proto, [@node, rhs.node])
+      Float.new(node)
+    end
+    
+    def abs
+      proto = Prototype.new(:abs, [Genera::Float], Genera::Float)
+      node  = Application.new(proto, [@node])
+      Float.new(node)
+    end
+    
+    def floor
+      proto = Prototype.new(:floor, [Genera::Float], Genera::Int)
+      node  = Application.new(proto, [@node])
+      Int.new(node)
+    end
+    
+    alias :to_i :floor
+    
+    def ceil
+      proto = Prototype.new(:ceil, [Genera::Float], Genera::Int)
+      node  = Application.new(proto, [@node])
+      Int.new(node)
+    end
+    
+    def round
+      proto = Prototype.new(:round, [Genera::Float], Genera::Int)
+      node  = Application.new(proto, [@node])
+      Int.new(node)
+    end
   end
   
   def Float(value)

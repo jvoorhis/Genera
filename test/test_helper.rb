@@ -7,5 +7,5 @@ def test_context
   entry = func.basic_blocks.append("entry")
   builder = LLVM::Builder.create
   builder.position_at_end(entry)
-  Genera::Context.new(mod, func, builder)
+  Genera::Context.new({}, mod, func, builder)
 end
