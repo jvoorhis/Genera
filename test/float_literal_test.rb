@@ -5,11 +5,11 @@ class FloatLiteralTest < Test::Unit::TestCase
   
   def test_ctor
     lit = FloatLiteral.new(1.0)
-    assert_kind_of Float, lit.value
+    assert_kind_of ::Float, lit.value
     assert_equal 1.0, lit.value
     
     lit = FloatLiteral.new(1)
-    assert_kind_of Float, lit.value
+    assert_kind_of ::Float, lit.value
     assert_equal 1.0, lit.value
   end
   
