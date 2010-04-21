@@ -17,6 +17,10 @@ module Genera
       Genera.runtime.run_function(self, *args)
     end
     
+    def to_proc
+      @proc ||= Proc.new { |*args| call(*args) }
+    end
+    
     def to_ptr
       @func.to_ptr
     end
