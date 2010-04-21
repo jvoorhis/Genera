@@ -1,5 +1,9 @@
 require 'llvm/core'
+require 'llvm/target'
+require 'llvm/execution_engine'
+require 'llvm/transforms/scalar'
 
+require 'genera/runtime'
 require 'genera/context'
 require 'genera/prototype'
 require 'genera/node'

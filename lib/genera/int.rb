@@ -11,38 +11,42 @@ module Genera
       @node = node
     end
     
+    def self.target_type
+      LLVM::Int
+    end
+    
     def generate(context)
       @node.generate(context)
     end
     
     def +(rhs)
-      proto = Prototype.new(:+, [Int, Int], Int) 
-      node  = Application.new(proto, [@node, rhs.node])
-      Int.new(node)
+      Int.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.add(lhs, rhs)
+      })
     end
     
     def -(rhs)
-      proto = Prototype.new(:-, [Int, Int], Int)
-      node  = Application.new(proto, [@node, rhs.node])
-      Int.new(node)
+      Int.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.sub(lhs, rhs)
+      })
     end
     
     def *(rhs)
-      proto = Prototype.new(:*, [Int, Int], Int)
-      node  = Application.new(proto, [@node, rhs.node])
-      Int.new(node)
+      Int.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.mul(lhs, rhs)
+      })
     end
     
     def /(rhs)
-      proto = Prototype.new(:/, [Int, Int], Int)
-      node  = Application.new(proto, [@node, rhs.node])
-      Int.new(node)
+      Int.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.sdiv(lhs, rhs)
+      })
     end
     
     def -@
-      proto = Prototype.new(:-@, [Int], Int)
-      node  = Application.new(proto, [@node])
-      Int.new(node)
+      Int.new(Generator.new(self) { |x|
+        builder.sub(LLVM::Int(0), x)
+      })
     end
     
     def +@
@@ -50,21 +54,15 @@ module Genera
     end
     
     def %(rhs)
-      proto = Prototype.new(:%, [Int, Int], Int)
-      node  = Application.new(proto, [@node, rhs.node])
-      Int.new(node)
-    end
-    
-    def **(rhs)
-      proto = Prototype.new(:**, [Int, Int], Int)
-      node  = Application.new(proto, [@node, rhs.node])
-      Int.new(node)
+      Int.new(Generator.new(self, rhs) { |x|
+        builder.srem(x)
+      })
     end
     
     def to_f
-      proto = Prototype.new(:to_f, [Int], Float)
-      node  = Application.new(proto, [@node])
-      Float.new(node)
+      Float.new(Generator.new(self) { |x|
+        builder.si2fp(x, LLVM::Float)
+      })
     end
   end
   

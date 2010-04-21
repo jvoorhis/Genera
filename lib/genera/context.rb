@@ -1,13 +1,5 @@
 module Genera
   
-  class Context
-    attr_reader :primitives, :module, :function, :builder
-    
-    def initialize(primitives, mod, func, builder)
-      @primitives = primitives
-      @module     = mod
-      @function   = func
-      @builder    = builder
-    end
+  class Context < Struct.new(:module, :function, :builder)
   end
 end

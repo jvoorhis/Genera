@@ -20,9 +20,6 @@ class IntTest < Test::Unit::TestCase
     rhs = Genera.Int(2.0)
     sum = lhs + rhs
     assert_kind_of Int, sum
-    assert_kind_of Application, sum.node
-    proto = Prototype.new(:+, [Int, Int], Int)
-    assert_equal proto, sum.node.prototype
   end
   
   def test_subtraction
@@ -30,9 +27,6 @@ class IntTest < Test::Unit::TestCase
     rhs = Genera.Int(2.0)
     difference = lhs - rhs
     assert_kind_of Int, difference
-    assert_kind_of Application, difference.node
-    proto = Prototype.new(:-, [Int, Int], Int)
-    assert_equal proto, difference.node.prototype
   end
   
   def test_multiplication
@@ -40,9 +34,6 @@ class IntTest < Test::Unit::TestCase
     rhs = Genera.Int(2.0)
     product = lhs * rhs
     assert_kind_of Int, product
-    assert_kind_of Application, product.node
-    proto = Prototype.new(:*, [Int, Int], Int)
-    assert_equal proto, product.node.prototype
   end
   
   def test_division
@@ -50,18 +41,12 @@ class IntTest < Test::Unit::TestCase
     rhs = Genera.Int(2.0)
     quotient = lhs / rhs
     assert_kind_of Int, quotient
-    assert_kind_of Application, quotient.node
-    proto = Prototype.new(:/, [Int, Int], Int)
-    assert_equal proto, quotient.node.prototype
   end
   
   def test_negation
     int = Genera.Int(1)
     neg = -int
     assert_kind_of Int, neg
-    assert_kind_of Application, neg.node
-    proto = Prototype.new(:-@, [Int], Int)
-    assert_equal proto, neg.node.prototype
   end
   
   def test_modulo
@@ -69,27 +54,11 @@ class IntTest < Test::Unit::TestCase
     rhs = Genera.Int(5)
     mod = lhs % rhs
     assert_kind_of Int, mod
-    assert_kind_of Application, mod.node
-    proto = Prototype.new(:%, [Int, Int], Int)
-    assert_equal proto, mod.node.prototype
-  end
-  
-  def test_exponentiation
-    lhs = Genera.Int(4)
-    rhs = Genera.Int(5)
-    pow = lhs ** rhs
-    assert_kind_of Int, pow
-    assert_kind_of Application, pow.node
-    proto = Prototype.new(:**, [Int, Int], Int)
-    assert_equal proto, pow.node.prototype
   end
   
   def test_to_f
     int = Genera.Int(1)
     flt = int.to_f
     assert_kind_of Float, flt
-    assert_kind_of Application, flt.node
-    proto = Prototype.new(:to_f, [Int], Float)
-    assert_equal proto, flt.node.prototype
   end
 end

@@ -11,38 +11,42 @@ module Genera
       @node = node
     end
     
+    def self.target_type
+      LLVM::Float
+    end
+    
     def generate(context)
       @node.generate(context)
     end
     
     def +(rhs)
-      proto = Prototype.new(:+, [Genera::Float, Genera::Float], Genera::Float)
-      node  = Application.new(proto, [@node, rhs.node])
-      Float.new(node)
+      Float.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fadd(lhs, rhs)
+      })
     end
     
     def -(rhs)
-      proto = Prototype.new(:-, [Genera::Float, Genera::Float], Genera::Float)
-      node  = Application.new(proto, [@node, rhs.node])
-      Float.new(node)
+      Float.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fsub(lhs, rhs)
+      })
     end
     
     def *(rhs)
-      proto = Prototype.new(:*, [Genera::Float, Genera::Float], Genera::Float)
-      node  = Application.new(proto, [@node, rhs.node])
-      Float.new(node)
+      Float.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fmul(lhs, rhs)
+      })
     end
     
     def /(rhs)
-      proto = Prototype.new(:/, [Genera::Float, Genera::Float], Genera::Float)
-      node  = Application.new(proto, [@node, rhs.node])
-      Float.new(node)
+      Float.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fdiv(lhs, rhs)
+      })
     end
     
     def -@
-      proto = Prototype.new(:-@, [Genera::Float], Genera::Float)
-      node  = Application.new(proto, [@node])
-      Float.new(node)
+      Float.new(Generator.new(self) { |x|
+        builder.fsub(LLVM::Float(0), x)
+      })
     end
     
     def +@
@@ -50,39 +54,41 @@ module Genera
     end
     
     def %(rhs)
-      proto = Prototype.new(:%, [Genera::Float, Genera::Float], Genera::Float)
-      node  = Application.new(proto, [@node, rhs.node])
-      Float.new(node)
+      Float.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.call(self.module.functions[:fmod], lhs, rhs)
+      })
     end
     
     def **(rhs)
-      proto = Prototype.new(:**, [Genera::Float, Genera::Float], Genera::Float)
-      node  = Application.new(proto, [@node, rhs.node])
-      Float.new(node)
+      Float.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.call(self.module.funtions[:powf], lhs, rhs)
+      })
     end
     
     def abs
-      proto = Prototype.new(:abs, [Genera::Float], Genera::Float)
-      node  = Application.new(proto, [@node])
-      Float.new(node)
+      Float.new(Generator.new(self) { |x|
+        builder.call(self.module.functions[:abs], x)
+      })
     end
     
     def floor
-      proto = Prototype.new(:floor, [Genera::Float], Genera::Int)
-      node  = Application.new(proto, [@node])
-      Int.new(node)
+      Int.new(Generator.new(self) { |x|
+        builder.fp2si(x, LLVM::Int)
+      })
     end
     
     def ceil
-      proto = Prototype.new(:ceil, [Genera::Float], Genera::Int)
-      node  = Application.new(proto, [@node])
-      Int.new(node)
+      Int.new(Generator.new(self) { |x|
+        f = builder.call(self.module.functions[:ceil], x)
+        builder.fp2si(f, LLVM::Int)
+      })
     end
     
     def round
-      proto = Prototype.new(:round, [Genera::Float], Genera::Int)
-      node  = Application.new(proto, [@node])
-      Int.new(node)
+      Int.new(Generator.new(self) { |x|
+        f = builder.call(self.module.functions[:roundf], x)
+        builder.fp2si(f, LLVM::Int)
+      })
     end
     
     alias :to_i :floor

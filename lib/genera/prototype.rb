@@ -9,6 +9,13 @@ module Genera
       @return_type = return_type
     end
     
+    def target_type
+      LLVM::Function(
+        @arg_types.map { |ty| ty.target_type },
+        @return_type.target_type
+      )
+    end
+    
     def ==(proto)
       return false unless proto.kind_of?(Prototype)
       @name == proto.name &&
