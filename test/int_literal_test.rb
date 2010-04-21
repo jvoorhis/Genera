@@ -1,7 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class IntLiteralTest < Test::Unit::TestCase
-  include Genera
   
   def test_ctor
     lit = IntLiteral.new(1)

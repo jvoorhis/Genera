@@ -8,6 +8,8 @@ module Genera
       @module = LLVM::Module.create("Genera")
       mp = LLVM::ModuleProvider.for_existing_module(@module)
       @ee = LLVM::ExecutionEngine.create_jit_compiler(mp)
+      
+      declare_functions!
     end
     
     def run_function(func, *args)
@@ -37,6 +39,15 @@ module Genera
       else
         raise ArgumentError, "Unsupported type #{ret_type}."
       end
+    end
+    
+    private
+    
+    def declare_functions!
+      @module.functions.add(:fmod, LLVM::Function([LLVM::Float, LLVM::Float], LLVM::Float))
+      @module.functions.add(:powf, LLVM::Function([LLVM::Float, LLVM::Float], LLVM::Float))
+      @module.functions.add(:abs, LLVM::Function([LLVM::Float], LLVM::Float))
+      @module.functions.add(:roundf, LLVM::Function([LLVM::Float], LLVM::Float))
     end
   end
   

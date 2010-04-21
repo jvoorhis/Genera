@@ -1,7 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class PrototypeTest < Test::Unit::TestCase
-  include Genera
   
   def test_ctor
     proto = Prototype.new(:+, [Genera::Float, Genera::Float], Genera::Float)

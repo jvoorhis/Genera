@@ -1,7 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class DataTest < Test::Unit::TestCase
-  include Genera
   
   def test_ctor
     val = LLVM::Int(0)

@@ -1,7 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class CondTest < Test::Unit::TestCase
-  include Genera
   
   def test_ctor
     t = BoolLiteral.true

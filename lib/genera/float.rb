@@ -61,7 +61,7 @@ module Genera
     
     def **(rhs)
       Float.new(Generator.new(self, rhs) { |lhs, rhs|
-        builder.call(self.module.funtions[:powf], lhs, rhs)
+        builder.call(self.module.functions[:powf], lhs, rhs)
       })
     end
     
@@ -79,8 +79,8 @@ module Genera
     
     def ceil
       Int.new(Generator.new(self) { |x|
-        f = builder.call(self.module.functions[:ceil], x)
-        builder.fp2si(f, LLVM::Int)
+        i = builder.fp2si(x, LLVM::Int)
+        builder.add(i, LLVM::Int(1))
       })
     end
     

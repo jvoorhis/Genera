@@ -1,7 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class IntTest < Test::Unit::TestCase
-  include Genera
   
   def test_Int
     int = Genera.Int(1)
