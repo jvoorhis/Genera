@@ -1,0 +1,12 @@
+= Genera
+
+Author:: Jeremy Voorhis
+Copyright:: Copyright (c) 2010 Jeremy Voorhis
+License:: BSD 3-clause (see LICENSE)
+
+Genera is a tool for building expression-oriented, JIT-compiled DSLs.
+
+== Requirements
+* ffi
+* LLVM 2.6, compiled with SHARED_LIBRARY=1
+* ruby-llvm
