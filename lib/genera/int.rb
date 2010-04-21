@@ -54,8 +54,8 @@ module Genera
     end
     
     def %(rhs)
-      Int.new(Generator.new(self, rhs) { |x|
-        builder.srem(x)
+      Int.new(Generator.new(self, rhs) { |a, b|
+        builder.srem(a, b)
       })
     end
     

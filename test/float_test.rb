@@ -127,6 +127,7 @@ class FloatTest < Test::Unit::TestCase
     ret_type = Genera::Float
     func = Function.new(name, arg_types, ret_type, &block)
     
+    # TODO: Use relative error calculation.
     args = Array.new(block.arity) { rand }
     assert_in_delta block.call(*args), func.call(*args), ERROR
   end
