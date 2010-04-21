@@ -11,11 +11,17 @@ module Genera
     end
     
     def run_function(func, *args)
+      unless args.size == func.arity
+        raise ArgumentError, "#{args.size} arguments given for arity #{func.arity}."
+      end
+      
       gvs = args.zip(func.prototype.arg_types).map do |arg, ty|
         if Float == ty
-          LLVM::GenericValue.from_f(arg)
+          raise TypeError, "Expected a Float, got #{arg}." unless arg.respond_to?(:to_f)
+          LLVM::GenericValue.from_f(arg.to_f)
         elsif Int == ty
-          LLVM::GenericValue.from_i(arg)
+          raise TypeError, "Expected an Int, got #{arg}." unless arg.respond_to?(:to_i)
+          LLVM::GenericValue.from_i(arg.to_i)
         else
           raise ArgumentError, "Unsupported type #{ty}."
         end
@@ -23,13 +29,13 @@ module Genera
       
       gvout = @ee.run_function(func, *gvs)
       
-      retty = func.prototype.return_type
-      if Genera::Float == retty
+      ret_type = func.prototype.return_type
+      if Genera::Float == ret_type
         gvout.to_f
-      elsif Int == retty
+      elsif Int == ret_type
         gvout.to_i
       else
-        raise ArgumentError, "Unsupported type #{retty}."
+        raise ArgumentError, "Unsupported type #{ret_type}."
       end
     end
   end

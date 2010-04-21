@@ -9,6 +9,10 @@ module Genera
       @return_type = return_type
     end
     
+    def arity
+      @arg_types.size
+    end
+    
     def target_type
       LLVM::Function(
         @arg_types.map { |ty| ty.target_type },

@@ -9,6 +9,10 @@ module Genera
       @func      = generate(@prototype, &body)
     end
     
+    def arity
+      @prototype.arity
+    end
+    
     def call(*args)
       Genera.runtime.run_function(self, *args)
     end

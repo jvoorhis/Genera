@@ -20,4 +20,18 @@ class FunctionTest < Test::Unit::TestCase
       func  = Function.new(proto, &:to_f)
     end
   end
+  
+  def test_call
+    proto = Prototype.new(:add, [Int, Int], Int)
+    func  = Function.new(proto) { |a, b| a + b }
+    assert_equal 4, func.call(2, 2)
+    assert_equal 4, func.call(2.0, 2.0)
+    assert_equal 4, func.call(2, 2.00001)
+    assert_raise TypeError do
+      assert_equal 4, func.call(2, Object.new)
+    end
+    assert_raise ArgumentError do
+      func.call(2)
+    end
+  end
 end
