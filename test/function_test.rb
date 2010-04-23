@@ -2,8 +2,7 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 
 class FunctionTest < Test::Unit::TestCase
   
-  proto = Prototype.new(:add, [Int, Int], Int)
-  @@add = Function.new(proto) { |a, b| a + b }
+  Add = Function.new(:add, [Int, Int], Int) { |a, b| a + b }
   
   def test_ctor
     # Invalid types are rejected
@@ -29,20 +28,20 @@ class FunctionTest < Test::Unit::TestCase
   end
   
   def test_call
-    assert_equal 4, @@add.call(2, 2)
-    assert_equal 4, @@add.call(2.0, 2.0)
-    assert_equal 4, @@add.call(2, 2.00001)
+    assert_equal 4, Add.call(2, 2)
+    assert_equal 4, Add.call(2.0, 2.0)
+    assert_equal 4, Add.call(2, 2.00001)
     assert_raise TypeError do
-      assert_equal 4, @@add.call(2, Object.new)
+      assert_equal 4, Add.call(2, Object.new)
     end
     assert_raise ArgumentError do
-      @@add.call(2)
+      Add.call(2)
     end
   end
   
   def test_to_proc
     assert_nothing_raised do
-      assert_equal 6, [1,2,3].inject(0, &@@add)
+      assert_equal 6, [1,2,3].inject(0, &Add)
     end
   end
 end
