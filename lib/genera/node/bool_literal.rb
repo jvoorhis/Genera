@@ -4,15 +4,15 @@ module Genera
     attr_reader :value
     
     def self.true
-      new(1)
+      new(true)
     end
     
     def self.false
-      new(0)
+      new(false)
     end
     
     def initialize(value)
-      @value = value.to_i.zero? ? 0 : 1
+      @value = value ? 1 : 0
     end
     
     def generate(context)

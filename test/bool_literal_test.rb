@@ -13,9 +13,9 @@ class BoolLiteralTest < Test::Unit::TestCase
   end
   
   def test_ctor
-    lit = BoolLiteral.new(0)
+    lit = BoolLiteral.new(false)
     assert_equal 0, lit.value
-    lit = BoolLiteral.new(1)
+    lit = BoolLiteral.new(true)
     assert_equal 1, lit.value
     lit = BoolLiteral.new(2)
     assert_equal 1, lit.value
