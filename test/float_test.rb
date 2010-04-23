@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 
 class FloatTest < Test::Unit::TestCase
   
-  ERROR = 0.1e-5
+  ERROR = 0.1e-4
   
   def test_Float
     flt = Genera.Float(1.0)
