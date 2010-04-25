@@ -13,7 +13,13 @@ class IntTest < Test::Unit::TestCase
     val = int.generate(context)
     assert_kind_of LLVM::Int, val
   end
-  
+
+  def test_coercion
+    assert_int_op "coercion" do |x|
+      1 + x
+    end
+  end
+
   def test_addition
     lhs = Genera.Int(1.0)
     rhs = Genera.Int(2.0)

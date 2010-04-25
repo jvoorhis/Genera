@@ -19,6 +19,10 @@ module Genera
       @node.generate(context)
     end
     
+    def coerce(other)
+      [Genera.Int(other), self]
+    end
+
     def +(rhs)
       Int.new(Generator.new(self, rhs) { |lhs, rhs|
         builder.add(lhs, rhs)
