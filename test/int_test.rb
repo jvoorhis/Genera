@@ -85,6 +85,66 @@ class IntTest < Test::Unit::TestCase
     end
   end
   
+  def test_eq
+    a = Genera.Int(1)
+    b = Genera.Int(1)
+    assert_kind_of Bool, a == b
+
+    assert_int_pred "eq" do |a, b|
+      a == b
+    end
+  end
+
+  def test_ne
+    a = Genera.Int(1)
+    b = Genera.Int(1)
+    assert_kind_of Bool, a != b
+
+    assert_int_pred "ne" do |a, b|
+      a != b
+    end
+  end
+
+  def test_gt
+    a = Genera.Int(1)
+    b = Genera.Int(1)
+    assert_kind_of Bool, a > b
+
+    assert_int_pred "gt" do |a, b|
+      a > b
+    end
+  end
+
+  def test_lt
+    a = Genera.Int(1)
+    b = Genera.Int(1)
+    assert_kind_of Bool, a < b
+
+    assert_int_pred "lt" do |a, b|
+      a < b
+    end
+  end
+  
+  def test_gte
+    a = Genera.Int(1)
+    b = Genera.Int(1)
+    assert_kind_of Bool, a >= b
+
+    assert_int_pred "gte" do |a, b|
+      a >= b
+    end
+  end
+
+  def test_lte
+    a = Genera.Int(1)
+    b = Genera.Int(1)
+    assert_kind_of Bool, a <= b
+
+    assert_int_pred "lte" do |a, b|
+      a <= b
+    end
+  end
+  
   def test_to_f
     int = Genera.Int(1)
     flt = int.to_f
@@ -101,6 +161,15 @@ class IntTest < Test::Unit::TestCase
     func = Function.new(name, arg_types, ret_type, &block)
     
     # TODO: use native max bound?
+    args = Array.new(block.arity) { rand(1000) }
+    assert_equal block.call(*args), func.call(*args)
+  end
+
+  def assert_int_pred(name, &block)
+    arg_types = Array.new(block.arity) { Genera::Int }
+    ret_type = Genera::Bool
+    func = Function.new(name, arg_types, ret_type, &block)
+
     args = Array.new(block.arity) { rand(1000) }
     assert_equal block.call(*args), func.call(*args)
   end

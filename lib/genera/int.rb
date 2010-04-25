@@ -68,6 +68,42 @@ module Genera
         builder.si2fp(x, LLVM::Float)
       })
     end
+
+    def ==(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.icmp(:eq, lhs, rhs)
+      })
+    end
+
+    def !=(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.icmp(:ne, lhs, rhs)
+      })
+    end
+
+    def >(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.icmp(:sgt, lhs, rhs)
+      })
+    end
+
+    def <(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.icmp(:slt, lhs, rhs)
+      })
+    end
+
+    def >=(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.icmp(:sge, lhs, rhs)
+      })
+    end
+
+    def <=(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.icmp(:sle, lhs, rhs)
+      })
+    end
   end
   
   def Int(value)
