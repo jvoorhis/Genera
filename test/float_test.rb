@@ -10,6 +10,12 @@ class FloatTest < Test::Unit::TestCase
     assert_kind_of FloatLiteral, flt.node
   end
   
+  def test_coerce
+    assert_floating_op "coercion" do |x|
+      1.0 + x            
+    end
+  end
+
   def test_generate
     flt = Genera.Float(1.0)
     context = test_context

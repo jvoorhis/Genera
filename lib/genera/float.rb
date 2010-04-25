@@ -19,6 +19,10 @@ module Genera
       @node.generate(context)
     end
     
+    def coerce(other)
+      [Genera.Float(other), self]
+    end
+
     def +(rhs)
       Float.new(Generator.new(self, rhs) { |lhs, rhs|
         builder.fadd(lhs, rhs)
