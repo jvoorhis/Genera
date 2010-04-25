@@ -137,8 +137,21 @@ class FloatTest < Test::Unit::TestCase
     ret_type = Genera::Float
     func = Function.new(name, arg_types, ret_type, &block)
     
-    # TODO: Use relative error calculation.
     args = Array.new(block.arity) { rand }
-    assert_in_delta block.call(*args), func.call(*args), ERROR
+    assert_relative_error block.call(*args), func.call(*args), ERROR
+  end
+  
+  # Implementation of relative floating point error, as described at
+  # http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm
+  def assert_relative_error(expected, actual, tolerance, message = nil)
+    if expected == actual
+      error = 0.0
+    elsif expected.abs > actual.abs
+      error = ((expected - actual) / expected.to_f).abs
+    else
+      error = ((expected - actual) / actual.to_f).abs
+    end
+    message ||= "Expected relative error between %e and %e to be within %e." % [expected, actual, tolerance]
+    assert (expected - actual).abs < tolerance || error < tolerance, message
   end
 end
