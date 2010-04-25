@@ -60,7 +60,7 @@ class BoolTest < Test::Unit::TestCase
     ret_type = Genera::Bool
     func = Function.new(name, arg_types, ret_type, &block)
     
-    args = Array.new(block.arity) { rand(2).nonzero? ? true : false }
+    args = Array.new(block.arity) { [true, false].sample }
     assert_equal block.call(*args), func.call(*args)
   end 
 end
