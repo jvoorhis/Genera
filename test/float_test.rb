@@ -11,7 +11,11 @@ class FloatTest < Test::Unit::TestCase
   end
   
   def test_coerce
-    assert_floating_op "coercion" do |x|
+    assert_floating_op "Fixnum coercion" do |x|
+      1 + x
+    end
+    
+    assert_floating_op "Float coercion" do |x|
       1.0 + x            
     end
   end
