@@ -24,6 +24,8 @@ module Genera
         elsif Int == ty
           raise TypeError, "Expected an Int, got #{arg}." unless arg.respond_to?(:to_i)
           LLVM::GenericValue.from_i(arg.to_i)
+        elsif Bool == ty
+	  LLVM::GenericValue.from_i(arg ? 1 : 0, LLVM::Int1, false)
         else
           raise ArgumentError, "Unsupported type #{ty}."
         end
@@ -36,6 +38,8 @@ module Genera
         gvout.to_f
       elsif Int == ret_type
         gvout.to_i
+      elsif Genera::Bool == ret_type
+        gvout.to_i.nonzero? ? true : false
       else
         raise ArgumentError, "Unsupported type #{ret_type}."
       end
