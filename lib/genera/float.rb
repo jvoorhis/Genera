@@ -100,6 +100,42 @@ module Genera
     def to_f
       self
     end
+
+    def ==(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fcmp(:oeq, lhs, rhs)
+      })
+    end
+
+    def !=(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fcmp(:one, lhs, rhs)
+      })
+    end
+
+    def >(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fcmp(:ogt, lhs, rhs)
+      })
+    end
+
+    def <(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fcmp(:olt, lhs, rhs)
+      })
+    end
+
+    def >=(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fcmp(:oge, lhs, rhs)
+      })
+    end
+
+    def <=(rhs)
+      Bool.new(Generator.new(self, rhs) { |lhs, rhs|
+        builder.fcmp(:ole, lhs, rhs)
+      })
+    end
   end
   
   def Float(value)

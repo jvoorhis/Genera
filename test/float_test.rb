@@ -132,15 +132,82 @@ class FloatTest < Test::Unit::TestCase
     assert_equal x.round, func.call(x)
   end
   
+  def test_eq
+    x = Genera.Float(1.0)
+    y = Genera.Float(1.0)
+    assert_kind_of Genera::Bool, x == y
+
+    func = Function.new("eq", [Float, Float], Bool) { |x, y| x == y }
+    assert_equal true, func.call(1.0, 1.0)
+  end
+
+  def test_ne
+    x = Genera.Float(1.0)
+    y = Genera.Float(1.0)
+    assert_kind_of Genera::Bool, x != y
+
+    func = Function.new("eq", [Float, Float], Bool) { |x, y| x != y }
+    assert_equal false, func.call(1.0, 1.0)
+  end
+
+  def test_gt
+    x = Genera.Float(1.0)
+    y = Genera.Float(1.0)
+    assert_kind_of Genera::Bool, x > y
+    
+    assert_floating_pred "gt" do |x, y|
+      x > y
+    end
+  end
+
+  def test_lt
+    x = Genera.Float(1.0)
+    y = Genera.Float(1.0)
+    assert_kind_of Genera::Bool, x < y
+
+    assert_floating_pred "lt" do |x, y|
+      x < y
+    end
+  end
+
+  def test_gte
+    x = Genera.Float(1.0)
+    y = Genera.Float(1.0)
+    assert_kind_of Genera::Bool, x >= y
+
+    assert_floating_pred "gte" do |x, y|
+      x >= y
+    end
+  end
+
+  def test_lte
+    x = Genera.Float(1.0)
+    y = Genera.Float(1.0)
+    assert_kind_of Genera::Bool, x <= y
+
+    assert_floating_pred "lte" do |x, y|
+      x <= y
+    end
+  end
+
   def assert_floating_op(name, &block)
     arg_types = Array.new(block.arity) { Genera::Float }
     ret_type = Genera::Float
     func = Function.new(name, arg_types, ret_type, &block)
-    
+
     args = Array.new(block.arity) { rand }
     assert_relative_error block.call(*args), func.call(*args), ERROR
   end
   
+  def assert_floating_pred(name, &block)
+    arg_types = Array.new(block.arity) { Genera::Float }
+    ret_type = Genera::Bool
+    func = Function.new(name, arg_types, ret_type, &block)
+
+    args = Array.new(block.arity) { rand }
+    assert_equal block.call(*args), func.call(*args)
+  end
+
   # Implementation of relative floating point error, as described at
   # http://www.cygnus-software.com/papers/comparingfloats/comparingfloats.htm
   def assert_relative_error(expected, actual, tolerance, message = nil)
