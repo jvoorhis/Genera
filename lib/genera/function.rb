@@ -53,9 +53,9 @@ module Genera
     
     def validate(proto, body)
       args = proto.arg_types.map { |ty| ty.new(UNREACHABLE) }
-      val = body.call(*args) rescue nil
-      unless proto.return_type === val
-        raise TypeError, "Expected #{proto}."
+      val = body.call(*args)
+      unless val.kind_of?(proto.return_type)
+        raise TypeError, "Expected #{proto.return_type} but got #{val.class}."
       end
     end
   end
